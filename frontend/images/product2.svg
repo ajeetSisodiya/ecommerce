@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 250">
+  <rect width="250" height="250" fill="#fff3e0"/>
+  <g transform="translate(55, 40)">
+    <!-- Watch face -->
+    <rect x="10" y="10" width="80" height="80" rx="8" fill="#ff6f00" stroke="#333" stroke-width="2"/>
+    <!-- Watch band left -->
+    <rect x="0" y="50" width="10" height="40" fill="#ff6f00" stroke="#333" stroke-width="1"/>
+    <!-- Watch band right -->
+    <rect x="100" y="50" width="10" height="40" fill="#ff6f00" stroke="#333" stroke-width="1"/>
+    <!-- Screen -->
+    <rect x="15" y="15" width="70" height="70" fill="#fff" stroke="#333" stroke-width="1" rx="5"/>
+    <!-- Time display -->
+    <text x="50" y="55" font-size="24" font-weight="bold" text-anchor="middle" fill="#333">9:41</text>
+  </g>
+</svg>

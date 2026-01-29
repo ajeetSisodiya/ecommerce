@@ -1,0 +1,47 @@
+📥 INSTALL NODE.JS MANUALLY
+
+Node.js is not installed on your system. Follow these steps:
+
+=== STEP 1: DOWNLOAD ===
+1. Go to: https://nodejs.org/
+2. Click the "LTS" (Long Term Support) button - currently v20.x or later
+3. This will download node-vXX.XX.X-x64.msi
+
+=== STEP 2: RUN INSTALLER ===
+1. Open the downloaded .msi file
+2. Click "Next" on the Welcome screen
+3. Check "I accept the license agreement"
+4. Click "Next" through all remaining screens
+5. Keep all default options selected
+6. Click "Install"
+7. Click "Finish"
+
+=== STEP 3: RESTART POWERSHELL ===
+1. Close all PowerShell windows
+2. Open a NEW PowerShell window
+3. Navigate back to your project folder
+
+=== STEP 4: VERIFY INSTALLATION ===
+Run these commands:
+   node --version
+   npm --version
+
+You should see version numbers like:
+   v20.11.0
+   10.2.4
+
+=== STEP 5: INSTALL DEPENDENCIES ===
+Once installed, run:
+   npm install
+   npm start
+
+Then open: http://localhost:3000
+
+---
+
+⏱️ The installation takes about 2-3 minutes.
+
+Need help? Make sure to:
+- Download from the OFFICIAL site: https://nodejs.org
+- Close and reopen PowerShell after installation
+- Use a NEW PowerShell window (not the current one)

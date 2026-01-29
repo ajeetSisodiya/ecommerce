@@ -1,0 +1,23 @@
+{
+  "name": "shophub-ecommerce",
+  "version": "1.0.0",
+  "description": "ShopHub - Modern Ecommerce Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "ecommerce",
+    "shopping",
+    "nodejs",
+    "express"
+  ],
+  "author": "Ajeet Sisodiya",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2"
+  }
+}

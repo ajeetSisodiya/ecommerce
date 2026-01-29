@@ -1,0 +1,52 @@
+# ⚡ QUICK SETUP - Node.js Required
+
+## 📥 Install Node.js (One-Time Setup)
+
+**Why?** Node.js comes with npm, allowing you to run the backend server and install dependencies.
+
+### Windows Installation:
+1. Visit: https://nodejs.org (Download LTS version)
+2. Run the installer
+3. Click "Next" through all prompts
+4. Accept the license agreement
+5. Choose default installation path
+6. Complete installation
+7. **Restart your computer** (important!)
+8. Open PowerShell and verify:
+   ```powershell
+   node --version
+   npm --version
+   ```
+
+---
+
+## 🚀 Start ShopHub (After Node.js Installation)
+
+```powershell
+# Open PowerShell in the ecommerce folder
+
+# Install dependencies (one time)
+npm install
+
+# Start the server
+npm start
+
+# You should see:
+# ✅ Server running at http://localhost:3000
+```
+
+Then open browser: **http://localhost:3000**
+
+---
+
+## Alternative: Use Live Server Extension (No Installation)
+
+If you don't want to install Node.js:
+
+1. Install "Live Server" extension in VS Code
+2. Right-click `index.html` → "Open with Live Server"
+3. Done! Site opens in browser
+
+---
+
+That's it! Your ecommerce site is now ready for backend integration. 🎉

@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - ShopHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="frontend/css/style.css">
+    <style>
+        .shop-container {
+            max-width: 1400px;
+            margin: 80px auto 40px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+        }
+
+        .sidebar {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .filter-section {
+            margin-bottom: 30px;
+        }
+
+        .filter-section h3 {
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #333;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #007bff;
+        }
+
+        .filter-option {
+            margin-bottom: 10px;
+        }
+
+        .filter-option label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .filter-option input[type="checkbox"],
+        .filter-option input[type="radio"] {
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        .price-range-input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .clear-filters {
+            width: 100%;
+            padding: 10px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .shop-header {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .shop-header h1 {
+            font-size: 32px;
+        }
+
+        .sort-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .sort-container select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6b6b;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+            min-height: 40px;
+        }
+
+        .product-rating {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .product-rating .stars {
+            color: #ffc107;
+        }
+
+        .product-rating .count {
+            color: #999;
+        }
+
+        .product-price {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .price-original {
+            color: #999;
+            text-decoration: line-through;
+            font-size: 14px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-quick-view {
+            flex: 1;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background 0.3s;
+        }
+
+        .btn-quick-view:hover {
+            background: #0056b3;
+        }
+
+        .btn-wishlist {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .btn-wishlist:hover {
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .pagination {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 40px;
+        }
+
+        .pagination button {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .pagination button.active {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .pagination button:hover {
+            background: #f8f9fa;
+        }
+
+        .no-products {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .shop-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .shop-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-shopping-bag"></i> ShopHub
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Shop</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="cart.html" class="nav-icon" title="Shopping Cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <div class="nav-auth-container" id="navAuthContainer">
+                    <button class="nav-icon" id="loginBtn" title="Login">
+                        <i class="fas fa-user"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Shop Container -->
+    <div class="shop-container">
+        <!-- Sidebar Filters -->
+        <aside class="sidebar">
+            <h2 style="margin-bottom: 20px; font-size: 20px;">Filters</h2>
+
+            <!-- Categories -->
+            <div class="filter-section">
+                <h3>Categories</h3>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox" class="category-filter" value="all" checked>
+                        All Products
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox" class="category-filter" value="audio">
+                        Audio
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox" class="category-filter" value="wearables">
+                        Wearables
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox" class="category-filter" value="tablets">
+                        Tablets
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox" class="category-filter" value="accessories">
+                        Accessories
+                    </label>
+                </div>
+            </div>
+
+            <!-- Price Range -->
+            <div class="filter-section">
+                <h3>Price Range</h3>
+                <label>Min: $<input type="number" id="minPrice" class="price-range-input" value="0" min="0"></label>
+                <label>Max: $<input type="number" id="maxPrice" class="price-range-input" value="1000" min="0"></label>
+            </div>
+
+            <!-- Rating -->
+            <div class="filter-section">
+                <h3>Rating</h3>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox" class="rating-filter" value="5">
+                        <i class="fas fa-star" style="color: #ffc107;"></i> 5 Stars
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox" class="rating-filter" value="4">
+                        <i class="fas fa-star" style="color: #ffc107;"></i> 4 & up
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox" class="rating-filter" value="3">
+                        <i class="fas fa-star" style="color: #ffc107;"></i> 3 & up
+                    </label>
+                </div>
+            </div>
+
+            <!-- Stock Status -->
+            <div class="filter-section">
+                <h3>Availability</h3>
+                <div class="filter-option">
+                    <label>
+                        <input type="checkbox" id="inStock" checked>
+                        In Stock
+                    </label>
+                </div>
+            </div>
+
+            <button class="clear-filters" onclick="clearFilters()">Clear All Filters</button>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Shop Header -->
+            <div class="shop-header">
+                <h1>Products</h1>
+                <div class="sort-container">
+                    <select id="sortBy" onchange="applySorting()">
+                        <option value="popularity">Sort by: Popularity</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="newest">Newest First</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="productsGrid"></div>
+
+            <!-- No Products Message -->
+            <div class="no-products" id="noProducts" style="display: none;">
+                <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 15px;"></i>
+                <p>No products found. Try adjusting your filters.</p>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination"></div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <p>We provide premium electronics and gadgets at the best prices.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: support@shophub.com</p>
+                <p>Phone: 1-800-SHOPHUB</p>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 ShopHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="frontend/js/script.js"></script>
+    <script>
+        // Product Database
+        const allProducts = [
+            {
+                id: 1,
+                name: 'Premium Wireless Headphones',
+                price: 199.99,
+                originalPrice: 299.99,
+                image: 'frontend/images/product1.svg',
+                category: 'audio',
+                rating: 4.5,
+                reviews: 324,
+                badge: '-33%',
+                inStock: true
+            },
+            {
+                id: 2,
+                name: 'Smart Watch Pro',
+                price: 299.99,
+                originalPrice: 399.99,
+                image: 'frontend/images/product2.svg',
+                category: 'wearables',
+                rating: 4.7,
+                reviews: 156,
+                badge: '-25%',
+                inStock: true
+            },
+            {
+                id: 3,
+                name: 'Tablet Plus',
+                price: 449.99,
+                originalPrice: 599.99,
+                image: 'frontend/images/product3.svg',
+                category: 'tablets',
+                rating: 4.6,
+                reviews: 89,
+                badge: '-25%',
+                inStock: true
+            },
+            {
+                id: 4,
+                name: 'Power Bank Ultra',
+                price: 79.99,
+                originalPrice: 99.99,
+                image: 'frontend/images/product4.svg',
+                category: 'accessories',
+                rating: 4.4,
+                reviews: 234,
+                badge: '-20%',
+                inStock: false
+            },
+            {
+                id: 5,
+                name: 'Bluetooth Speaker',
+                price: 89.99,
+                originalPrice: 129.99,
+                image: 'frontend/images/product1.svg',
+                category: 'audio',
+                rating: 4.3,
+                reviews: 198,
+                badge: '-30%',
+                inStock: true
+            },
+            {
+                id: 6,
+                name: 'Fitness Tracker',
+                price: 149.99,
+                originalPrice: 199.99,
+                image: 'frontend/images/product2.svg',
+                category: 'wearables',
+                rating: 4.5,
+                reviews: 142,
+                badge: '-25%',
+                inStock: true
+            },
+            {
+                id: 7,
+                name: 'USB-C Hub',
+                price: 39.99,
+                originalPrice: 59.99,
+                image: 'frontend/images/product4.svg',
+                category: 'accessories',
+                rating: 4.2,
+                reviews: 95,
+                badge: '-33%',
+                inStock: true
+            },
+            {
+                id: 8,
+                name: 'Wireless Charging Pad',
+                price: 29.99,
+                originalPrice: 49.99,
+                image: 'frontend/images/product4.svg',
+                category: 'accessories',
+                rating: 4.4,
+                reviews: 267,
+                badge: '-40%',
+                inStock: true
+            }
+        ];
+
+        let currentPage = 1;
+        const itemsPerPage = 12;
+        let filteredProducts = [...allProducts];
+
+        // Render products
+        function renderProducts() {
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const paginatedProducts = filteredProducts.slice(start, end);
+
+            const grid = document.getElementById('productsGrid');
+            const noProducts = document.getElementById('noProducts');
+
+            if (paginatedProducts.length === 0) {
+                grid.innerHTML = '';
+                noProducts.style.display = 'block';
+            } else {
+                noProducts.style.display = 'none';
+                grid.innerHTML = paginatedProducts.map(product => `
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="${product.image}" alt="${product.name}">
+                            ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-rating">
+                                <span class="stars">
+                                    ${'<i class="fas fa-star"></i>'.repeat(Math.floor(product.rating))}
+                                    ${product.rating % 1 !== 0 ? '<i class="fas fa-star-half-alt"></i>' : ''}
+                                </span>
+                                <span class="count">(${product.reviews})</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="price">$${product.price.toFixed(2)}</span>
+                                <span class="price-original">$${product.originalPrice.toFixed(2)}</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn-quick-view" onclick="viewProduct(${product.id})">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="btn-wishlist" onclick="addToWishlist(${product.id})">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            renderPagination();
+        }
+
+        // Render pagination
+        function renderPagination() {
+            const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+            const pagination = document.getElementById('pagination');
+
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button ${i === currentPage ? 'class="active"' : ''} onclick="goToPage(${i})">${i}</button>`;
+            }
+            pagination.innerHTML = html;
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            renderProducts();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Filter products
+        function applyFilters() {
+            const minPrice = parseFloat(document.getElementById('minPrice').value) || 0;
+            const maxPrice = parseFloat(document.getElementById('maxPrice').value) || 1000;
+            const inStockOnly = document.getElementById('inStock').checked;
+
+            filteredProducts = allProducts.filter(product => {
+                let matches = true;
+
+                if (product.price < minPrice || product.price > maxPrice) matches = false;
+                if (inStockOnly && !product.inStock) matches = false;
+
+                return matches;
+            });
+
+            currentPage = 1;
+            renderProducts();
+        }
+
+        function applySorting() {
+            const sortBy = document.getElementById('sortBy').value;
+
+            switch(sortBy) {
+                case 'price-low':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating':
+                    filteredProducts.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'newest':
+                    filteredProducts.sort((a, b) => b.id - a.id);
+                    break;
+                default:
+                    filteredProducts.sort((a, b) => b.reviews - a.reviews);
+            }
+
+            renderProducts();
+        }
+
+        function clearFilters() {
+            document.getElementById('minPrice').value = 0;
+            document.getElementById('maxPrice').value = 1000;
+            document.getElementById('inStock').checked = true;
+            document.getElementById('sortBy').value = 'popularity';
+            filteredProducts = [...allProducts];
+            currentPage = 1;
+            renderProducts();
+        }
+
+        function viewProduct(id) {
+            window.location.href = `product.html?id=${id}`;
+        }
+
+        function addToWishlist(id) {
+            showAlert('Added to wishlist!');
+        }
+
+        // Event listeners
+        document.getElementById('minPrice').addEventListener('change', applyFilters);
+        document.getElementById('maxPrice').addEventListener('change', applyFilters);
+        document.getElementById('inStock').addEventListener('change', applyFilters);
+
+        // Initialize
+        renderProducts();
+    </script>
+</body>
+</html>
