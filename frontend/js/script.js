@@ -495,3 +495,75 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+
+// ================= FLOW FIX PATCHES (NON-DESTRUCTIVE) =================
+
+// FIX 1: Shop button should go to products page
+if (typeof shopBtn !== 'undefined' && shopBtn) {
+    shopBtn.addEventListener('click', () => {
+        window.location.href = 'products.html';
+    });
+}
+
+// FIX 2: Product card → product detail page
+document.querySelectorAll('.product-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-add-cart')) return;
+        const productName = card.querySelector('.product-info h3')?.textContent;
+        localStorage.setItem('selectedProduct', productName);
+        window.location.href = 'product.html';
+    });
+});
+
+// FIX 3: Quantity-aware addToCart override
+const __oldAddToCart = typeof addToCart === 'function' ? addToCart : null;
+function addToCart(product) {
+    let cart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+    const existing = cart.find(p => p.name === product.name);
+    if (existing) {
+        existing.quantity += 1;
+    } else {
+        cart.push({ ...product, quantity: 1 });
+    }
+    localStorage.setItem('shoppingCart', JSON.stringify(cart));
+    if (typeof updateCartCount === 'function') updateCartCount();
+}
+
+// FIX 4: Checkout requires login
+function proceedToCheckout() {
+    if (!currentUser) {
+        localStorage.setItem('pendingCheckout', 'true');
+        if (loginModal) {
+            loginModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        return;
+    }
+    window.location.href = 'checkout.html';
+}
+
+// FIX 5: Resume checkout after login
+(function () {
+    const _oldUpdateAuthUI = updateAuthUI;
+    updateAuthUI = function () {
+        _oldUpdateAuthUI();
+        if (localStorage.getItem('pendingCheckout') && currentUser) {
+            localStorage.removeItem('pendingCheckout');
+            window.location.href = 'checkout.html';
+        }
+    };
+})();
+
+// ================= END FLOW FIX PATCHES =================
+
+
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+  const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  const cartCountEl = document.getElementById('cartCount');
+  if (cartCountEl) {
+    cartCountEl.innerText = count;
+  }
+}

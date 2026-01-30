@@ -29,6 +29,101 @@ body {
     background-color: var(--light-color);
 }
 
+/* ================= NAVBAR (SINGLE SOURCE OF TRUTH) ================= */
+
+.navbar {
+    width: 100%;
+    background: var(--white-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dark-color);
+}
+
+/* Menu */
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu li a {
+    text-decoration: none;
+    color: var(--dark-color);
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.nav-menu li a:hover {
+    color: var(--primary-color);
+}
+
+/* Icons */
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-icon {
+    position: relative;
+    color: var(--dark-color);
+    font-size: 18px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.nav-icon:hover {
+    color: var(--primary-color);
+}
+
+/* Cart badge */
+.cart-count {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background: var(--primary-color);
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: 600;
+}
+
+/* Auth icon */
+.nav-auth-container button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--dark-color);
+}
+
+.nav-auth-container button:hover {
+    color: var(--primary-color);
+}
+
+
 /* Navigation Bar */
 .navbar {
     background: var(--white-color);
@@ -603,6 +698,7 @@ body {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -613,6 +709,7 @@ body {
         opacity: 0;
         transform: translateY(-50px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -624,6 +721,7 @@ body {
         opacity: 0;
         transform: translateY(-30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -635,6 +733,7 @@ body {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -700,46 +799,3 @@ body {
     }
 }
 
-@media (max-width: 480px) {
-    .navbar-container {
-        padding: 1rem;
-    }
-
-    .navbar-logo {
-        font-size: 1.2rem;
-    }
-
-    .hero-content h1 {
-        font-size: 1.5rem;
-    }
-
-    .hero-content p {
-        font-size: 0.9rem;
-    }
-
-    .btn-primary {
-        padding: 0.8rem 1.5rem;
-        font-size: 0.9rem;
-    }
-
-    .products-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .product-card {
-        margin: 0 auto;
-        max-width: 280px;
-    }
-
-    .feature {
-        padding: 1.5rem;
-    }
-
-    .feature i {
-        font-size: 2rem;
-    }
-
-    .feature h3 {
-        font-size: 1.1rem;
-    }
-}
